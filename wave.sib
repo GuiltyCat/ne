@@ -1,0 +1,71 @@
+std.sib import
+io.sib import
+math.sib import
+
+44100 u32
+ SAMPLING_FREQ =
+
+1 f64 SAMPLING_FREQ /
+ SAMPLING_INTERVAL =
+
+# [ t f p v ]
+0 i64 COUNT =
+[
+		 v =
+		 p =
+		 f =
+		 t =
+		2 f64 __PI  f   t  * * *  p  + c_sin  v  *
+]
+def wave_sin =
+
+# [ f l v p ]
+ [
+		 __STACK
+		 p =
+		 v =
+		 l =
+		 f =
+		0 f64  l  SAMPLING_INTERVAL range_step 
+		 f   p   v   <! wave_sin . pair pair pair pair def map
+		  ]
+def wave_sin_list =
+
+[
+		 __STACK
+		 p =
+		 v =
+		 l =
+		 f =
+		0 f64  l  SAMPLING_INTERVAL range_step f64a array =
+		array
+		 f   p   v   <! wave_sin . pair pair pair pair def amap
+		 array
+		  ]
+def wave_sin_array =
+
+
+100 f64 1 f64 1 f64 0 f64 wave_sin_array
+
+# __STACK
+
+# [__PI sin]
+
+[
+		 w =
+		 f =
+		 s =
+		 l =
+		 v =
+		 p =
+
+]
+def Wave =
+
+[
+		 A =
+		 D =
+		 S =
+		 R =
+		 ]
+def ADSR =

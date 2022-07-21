@@ -1,0 +1,18 @@
+!< [ write as wav ]
+
+# [ support i64a ]
+[  
+	= array
+	= file
+
+	[ 4 24 8 ] [i64] def map sum array alen 2 i64 * + chunk_size =
+
+	[  
+		RIFF
+		chunk_size
+		WAVE
+		fmt\ 
+		file_size
+	]
+]
+def write_wav =
