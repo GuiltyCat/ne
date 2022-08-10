@@ -1,71 +1,157 @@
 std.sib import
 io.sib import
 math.sib import
+wav.sib import
+limits.sib import
 
-44100 u32
- SAMPLING_FREQ =
-
-1 f64 SAMPLING_FREQ /
- SAMPLING_INTERVAL =
+44100 u32             SAMPLING_FREQ =
+1 f64 SAMPLING_FREQ / SAMPLING_INTERVAL =
+__I16_MAX             MAX_VOL =
 
 # [ t f p v ]
 0 i64 COUNT =
 [
-		 v =
-		 p =
-		 f =
-		 t =
-		2 f64 __PI  f   t  * * *  p  + c_sin  v  *
+	v =
+	p =
+	f =
+	t =
+	2 f64 __PI  f   t  * * *  p  + c_sin  v  * MAX_VOL *
+]
+def wave_c_sin =
+
+[
+	v =
+	p =
+	f =
+	t =
+	2 f64 __PI  f   t  * * *  p  + sin  v  *
 ]
 def wave_sin =
 
 # [ f l v p ]
- [
-		 __STACK
-		 p =
-		 v =
-		 l =
-		 f =
-		0 f64  l  SAMPLING_INTERVAL range_step 
-		 f   p   v   <! wave_sin . pair pair pair pair def map
-		  ]
+[
+	p =
+	v =
+	l =
+	f =
+	0 f64  l  SAMPLING_INTERVAL range_step
+	f   p   v   <! wave_sin [] pair pair pair pair def map
+]
 def wave_sin_list =
 
+# [ f l v p ]
 [
-		 __STACK
-		 p =
-		 v =
-		 l =
-		 f =
-		0 f64  l  SAMPLING_INTERVAL range_step f64a array =
-		array
-		 f   p   v   <! wave_sin . pair pair pair pair def amap
-		 array
-		  ]
+	p =
+	v =
+	l =
+	f =
+	0 f64  l  SAMPLING_INTERVAL range_step f64a array =
+	array
+	f p v <! wave_c_sin [] pair pair pair pair def amap
+	array
+]
+def wave_c_sin_array =
+
+[
+	p =
+	v =
+	l =
+	f =
+	0 f64  l  SAMPLING_INTERVAL range_step f64a array =
+	array
+	f   p   v   <! wave_sin [] pair pair pair pair def amap
+	array
+]
 def wave_sin_array =
 
+test.wav w open file =
 
-100 f64 1 f64 1 f64 0 f64 wave_sin_array
+440 f64 f =
+1 f64   l =
+0.5 f64 v =
+0 f64   p =
+f l v p wave_c_sin_array
+make_wav
 
-# __STACK
-
-# [__PI sin]
+file write
+file close
 
 [
-		 w =
-		 f =
-		 s =
-		 l =
-		 v =
-		 p =
+	w =
+	f =
+	s =
+	l =
+	v =
+	p =
 
 ]
 def Wave =
 
 [
-		 A =
-		 D =
-		 S =
-		 R =
-		 ]
+	A =
+	D =
+	S =
+	R =
+]
 def ADSR =
+
+# [ format is [f s l v p w] ]
+
+[ right left ] def get_s =
+[ right right left ] def get_l =
+[
+	fslvpw =
+	fslvpw left [] == ? [0 f64] [
+		fslvpw left get_s
+		fslvpw left get_l
+		+
+		fslvpw right self max
+	] exec
+] def total_length =
+# [
+[
+	[ 0 f64 0 f64 10 f64 0 f64 0 f64 0 f64 ]
+	[ 0 f64 10 f64 20 f64 0 f64 0 f64 0 f64 ]
+]
+total_length
+__STACK
+]
+
+[
+	index_s =
+	index_d =
+	array_short  =
+	array_dst =
+	index_s array_short alen >= ? [] [
+		array_dst index_d
+		array_dst index_d aget
+		array_short index_s aget
+		+
+		aset >!
+		array_dst array_short index_d ++ index_s ++ self
+	] exec
+]
+def plus_array_sub =
+
+[
+	start =
+	array_short  = # [shorter than array_dst]
+	array_dst =
+
+	array_short alen start + array_dst alen >= ?
+	[ array_short\ is\ too\ long eputs ]
+	[
+		array_dst array_short start 0 u64 plus_array_sub
+	] exec
+	array_dst
+] def plus_array =
+
+0 f64 10 f64 range f64a dst =
+10 f64 15 f64 range f64a short =
+
+dst short 1 u64 plus_array
+__STACK
+
+
+
+# __STACK

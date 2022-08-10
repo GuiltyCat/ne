@@ -1,18 +1,77 @@
-!< [ write as wav ]
+std.sib import
+type.sib import
 
-# [ support i64a ]
-[  
-	= array
-	= file
+[
+	data =
+	ID =
 
-	[ 4 24 8 ] [i64] def map sum array alen 2 i64 * + chunk_size =
-
-	[  
-		RIFF
-		chunk_size
-		WAVE
-		fmt\ 
-		file_size
-	]
+	ID
+	data alen to_u32 n32_to_u8a
+	><
+	data
+	><
 ]
-def write_wav =
+def make_chunk =
+
+# [ support i16a ]
+[  
+	array =
+	array alen to_u32 4 u32 * data_size =
+
+	!< [ Define constant ]
+	44100 u32 SAMPLING_FREQUENCY =
+	1 u16 NUMBER_OF_CHANNELS =
+	16 u16 BITS_PER_SAMPLE =
+
+	!< [ main chunk ]
+
+	RIFF
+	36 u32 data_size + n32_to_u8a
+	WAVE
+	><
+	><
+
+# [tmp = tmp alen __STACK >! tmp]
+	!< [ sub-chunk1 ]
+
+	fmt\ 
+	16 u32 n32_to_u8a !< [ size of chunk ]
+	><
+	1 u16  n16_to_u8a  !< [ use PCM ]
+	><
+	NUMBER_OF_CHANNELS n16_to_u8a     !< [ Number of channels ]
+	><
+	SAMPLING_FREQUENCY n32_to_u8a !< [ Sampling srequency ]
+	><
+	SAMPLING_FREQUENCY NUMBER_OF_CHANNELS * BITS_PER_SAMPLE 8 i16 / * to_u32 n32_to_u8a !< [ Bytes per sec ]
+	><
+	NUMBER_OF_CHANNELS BITS_PER_SAMPLE 8 u16 / * to_u16 n16_to_u8a !< [ Block align ]
+	><
+	BITS_PER_SAMPLE n16_to_u8a
+	><
+	
+	><
+	
+	!< [ sub-chunk2 ]
+
+	data 
+	data_size n32_to_u8a
+	><
+
+	><
+	
+	array to_i16a n16a_to_u8a
+	><
+]
+def make_wav =
+
+# [
+259 u32 n32_to_u8a
+0 i16 10 u64 repeat i16a
+n16a_to_u8a
+
+
+array
+__STACK
+]
+
