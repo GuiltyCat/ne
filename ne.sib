@@ -32,59 +32,93 @@
 	base_freq 4 f64 * freq =
 	freq length volume phase wave_c_sin_array2
 	aadd
-] 
-def voice =
+	] 
+	def voice =
 
 
- [
-	[ 0 -5 -10 -12] 
-	[f64] def map <! dB map f64a normalize 0.7 f64 aconv 
+	[
+		[ 0 -5 -10 -12] 
+		[f64] def map <! dB map f64a normalize 0.7 f64 aconv 
+		voice 
+	] exec
+	test/a.wav swap write_to_wav
+
+	[
+		[ 0 0 -8 -15] 
+		[f64] def map <! dB map f64a normalize 0.7 f64 aconv voice 
+	]exec
+	test/i.wav swap write_to_wav
+
+	[
+		[ 0 0 -17 -20] 
+		[f64] def map <! dB map f64a normalize 0.7 f64 aconv voice 
+	]exec
+	test/u.wav swap write_to_wav
+
+	[
+		[ 0 -3 -7 -18] 
+		[f64] def map <! dB map f64a normalize 0.7 f64 aconv voice 
+	] exec
+	test/e.wav swap write_to_wav
+
+	[
+		[ 0 -3 -7 -10] 
+		[f64] def map <! dB map f64a normalize 0.7 f64 aconv voice 
+	] exec
+	'test/o.wav' swap write_to_wav
+	]
+
+# [
+	[
+		[ 0 f64 0 f64] copy <! dB map f64a normalize 0.7 f64 aconv
+		ratio =
+
+		1 f64 length =
+		0 f64 phase =
+
+		1000 f64 freq =
+		ratio 0 u64 aget volume =
+		freq length volume phase wave_c_sin_array2
+
+		1900 f64 freq =
+		ratio 1 u64 aget volume =
+		freq length volume phase wave_c_sin_array2
+		aadd
+	] 
+	def voice =
+
 	voice 
-] exec
-test/a.wav swap write_to_wav
+	'test.wav' swap write_to_wav
+	]
 
 [
-	[ 0 0 -8 -15] 
-	[f64] def map <! dB map f64a normalize 0.7 f64 aconv voice 
-]exec
-test/i.wav swap write_to_wav
+	sec =
+	0 f64 sec SAMPLING_FREQ sec * alin
+] def gen_time =
 
 [
-	[ 0 0 -17 -20] 
-	[f64] def map <! dB map f64a normalize 0.7 f64 aconv voice 
-]exec
-test/u.wav swap write_to_wav
+	sec =
+	end =
+	start =
 
-[
-	[ 0 -3 -7 -18] 
-	[f64] def map <! dB map f64a normalize 0.7 f64 aconv voice 
-] exec
-test/e.wav swap write_to_wav
+	start end SAMPLING_FREQ sec * alin
 
-[
-	[ 0 -3 -7 -10] 
-	[f64] def map <! dB map f64a normalize 0.7 f64 aconv voice 
-] exec
-'test/o.wav' swap write_to_wav
+] def line_shift =
+
+1 f64 sec = 
+
+sec gen_time t =
+
+300 f64 600 f64 sec line_shift f =
+
+f 2 f64 __PI * aconv t ahprod
+<! c_sin amap
+__I16_MAX aconv
+# print_array
+
+
+'test.wav' swap write_to_wav
 ]
 
-[
-	[ 0 f64 0 f64] copy <! dB map f64a normalize 0.7 f64 aconv
-	ratio =
 
-	1 f64 length =
-	0 f64 phase =
 
-	1000 f64 freq =
-	ratio 0 u64 aget volume =
-	freq length volume phase wave_c_sin_array2
-
-	1900 f64 freq =
-	ratio 1 u64 aget volume =
-	freq length volume phase wave_c_sin_array2
-	aadd
-] 
-def voice =
-
-voice 
-'test.wav' swap write_to_wav
