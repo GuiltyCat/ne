@@ -1,0 +1,90 @@
+
+'signal.sib' import
+'io.sib' import
+'math.sib' import
+
+# [
+[
+	ratio =
+
+
+	440 f64 base_freq =
+	1 f64 length =
+	0 f64 phase =
+
+	ratio 0 f64 aget volume =
+	base_freq 1 f64 * freq =
+	freq length volume phase 
+	wave_c_sin_array2
+
+	ratio 1 f64 aget volume =
+	base_freq 2 f64 * freq =
+	freq length volume phase 
+	wave_c_sin_array2
+	aadd
+
+	ratio 2 f64 aget volume =
+	base_freq 3 f64 * freq =
+	freq length volume phase wave_c_sin_array2
+	aadd
+
+	ratio 3 f64 aget volume =
+	base_freq 4 f64 * freq =
+	freq length volume phase wave_c_sin_array2
+	aadd
+] 
+def voice =
+
+
+ [
+	[ 0 -5 -10 -12] 
+	[f64] def map <! dB map f64a normalize 0.7 f64 aconv 
+	voice 
+] exec
+test/a.wav swap write_to_wav
+
+[
+	[ 0 0 -8 -15] 
+	[f64] def map <! dB map f64a normalize 0.7 f64 aconv voice 
+]exec
+test/i.wav swap write_to_wav
+
+[
+	[ 0 0 -17 -20] 
+	[f64] def map <! dB map f64a normalize 0.7 f64 aconv voice 
+]exec
+test/u.wav swap write_to_wav
+
+[
+	[ 0 -3 -7 -18] 
+	[f64] def map <! dB map f64a normalize 0.7 f64 aconv voice 
+] exec
+test/e.wav swap write_to_wav
+
+[
+	[ 0 -3 -7 -10] 
+	[f64] def map <! dB map f64a normalize 0.7 f64 aconv voice 
+] exec
+'test/o.wav' swap write_to_wav
+]
+
+[
+	[ 0 f64 0 f64] copy <! dB map f64a normalize 0.7 f64 aconv
+	ratio =
+
+	1 f64 length =
+	0 f64 phase =
+
+	1000 f64 freq =
+	ratio 0 u64 aget volume =
+	freq length volume phase wave_c_sin_array2
+
+	1900 f64 freq =
+	ratio 1 u64 aget volume =
+	freq length volume phase wave_c_sin_array2
+	aadd
+] 
+def voice =
+
+voice 
+'test.wav' swap write_to_wav
