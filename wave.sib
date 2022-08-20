@@ -1,10 +1,10 @@
-std.sib import
-io.sib import
-math.sib import
-wav.sib import
-limits.sib import
-array.sib import
-filter.sib import
+'std.sib' import
+'io.sib' import
+'math.sib' import
+'wav.sib' import
+'limits.sib' import
+'array.sib' import
+'filter.sib' import
 
 # [ t f p v ]
 0 i64 COUNT =

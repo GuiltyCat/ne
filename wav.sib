@@ -1,5 +1,5 @@
-std.sib import
-type.sib import
+'std.sib' import
+'type.sib' import
 
 [
 	data =
@@ -25,16 +25,17 @@ def make_chunk =
 
 	!< [ main chunk ]
 
-	RIFF
+	'RIFF'
 	36 u32 data_size + n32_to_u8a
-	WAVE
+	'WAVE'
 	><
 	><
+	
 
 # [tmp = tmp alen __STACK >! tmp]
 	!< [ sub-chunk1 ]
 
-	fmt\ 
+	'fmt\ '
 	16 u32 n32_to_u8a !< [ size of chunk ]
 	><
 	1 u16  n16_to_u8a  !< [ use PCM ]
@@ -54,7 +55,7 @@ def make_chunk =
 	
 	!< [ sub-chunk2 ]
 
-	data 
+	'data' 
 	data_size n32_to_u8a
 	><
 
