@@ -1,100 +1,62 @@
-
 'signal.sib' import
 'io.sib' import
 'math.sib' import
 
-# [
 [
-	ratio =
+	sec =
+	0 f64 SAMPLING_FREQ sec * afull
+] def gen_base_array =
 
 
-	440 f64 base_freq =
-	1 f64 length =
-	0 f64 phase =
+[
+	w =
+	sec =
+	ef =
+	sf =
 
-	ratio 0 f64 aget volume =
-	base_freq 1 f64 * freq =
-	freq length volume phase 
-	wave_c_sin_array2
-
-	ratio 1 f64 aget volume =
-	base_freq 2 f64 * freq =
-	freq length volume phase 
-	wave_c_sin_array2
-	aadd
-
-	ratio 2 f64 aget volume =
-	base_freq 3 f64 * freq =
-	freq length volume phase wave_c_sin_array2
-	aadd
-
-	ratio 3 f64 aget volume =
-	base_freq 4 f64 * freq =
-	freq length volume phase wave_c_sin_array2
-	aadd
-	] 
-	def voice =
-
-
-	[
-		[ 0 -5 -10 -12] 
-		[f64] def map <! dB map f64a normalize 0.7 f64 aconv 
-		voice 
-	] exec
-	test/a.wav swap write_to_wav
-
-	[
-		[ 0 0 -8 -15] 
-		[f64] def map <! dB map f64a normalize 0.7 f64 aconv voice 
-	]exec
-	test/i.wav swap write_to_wav
-
-	[
-		[ 0 0 -17 -20] 
-		[f64] def map <! dB map f64a normalize 0.7 f64 aconv voice 
-	]exec
-	test/u.wav swap write_to_wav
-
-	[
-		[ 0 -3 -7 -18] 
-		[f64] def map <! dB map f64a normalize 0.7 f64 aconv voice 
-	] exec
-	test/e.wav swap write_to_wav
-
-	[
-		[ 0 -3 -7 -10] 
-		[f64] def map <! dB map f64a normalize 0.7 f64 aconv voice 
-	] exec
-	'test/o.wav' swap write_to_wav
-	]
-
-# [
-	[
-		[ 0 f64 0 f64] copy <! dB map f64a normalize 0.7 f64 aconv
-		ratio =
-
-		1 f64 length =
-		0 f64 phase =
-
-		1000 f64 freq =
-		ratio 0 u64 aget volume =
-		freq length volume phase wave_c_sin_array2
-
-		1900 f64 freq =
-		ratio 1 u64 aget volume =
-		freq length volume phase wave_c_sin_array2
-		aadd
-	] 
-	def voice =
-
-	voice 
-	'test.wav' swap write_to_wav
-	]
+	sf ef SAMPLING_FREQ sec * alin
+	2 f64 __PI * SAMPLING_FREQ / aconv acumsum
+	<! w amap
+] def freq_shift =
 
 [
 	sec =
-	0 f64 sec SAMPLING_FREQ sec * alin
-] def gen_time =
+	sec SAMPLING_FREQ * to_u64
+] def sec2index =
+
+[
+	start_sec =
+	insert_array =
+	base_array =
+
+	start_sec sec2index i =
+
+	base_array i insert_array alen agetr 
+	insert_array aadd >!
+	base_array
+] def merge_array =
+
+6 f64 total_sec =
+total_sec gen_base_array base_array =
+base_array
+200 f64 2200 f64 3 f64 <! c_sin freq_shift 
+0 f64 merge_array
+
+
+2200 f64 2200 f64 3 f64 <! c_sin freq_shift
+3 f64 merge_array
+ VOL_MAX 2 f64 / aconv 
+# [VOL_MAX 2 f64 / aconv
+2200 f64 2200 f64 3 f64 <! c_sin freq_shift 
+
+3 f64
+merge_array
+]
+
+
+'test.wav' swap write_to_wav2
+
+# [
 
 [
 	sec =
@@ -105,20 +67,21 @@
 
 ] def line_shift =
 
-1 f64 sec = 
+10 f64 sec = 
 
 sec gen_time t =
 
-300 f64 600 f64 sec line_shift f =
+300 f64 1200 f64 sec line_shift f =
+f 2 f64 __PI * aconv SAMPLING_INTERVAL aconv acumsum
+<! c_sin amap __I16_MAX aconv
 
-f 2 f64 __PI * aconv t ahprod
-<! c_sin amap
-__I16_MAX aconv
-# print_array
+1200 f64 1200 f64 sec line_shift f =
+f 2 f64 __PI * aconv SAMPLING_INTERVAL aconv acumsum
+<! c_sin amap __I16_MAX aconv
+
+><
+
+'test.wav' swap write_to_wav2
 
 
-'test.wav' swap write_to_wav
 ]
-
-
-
