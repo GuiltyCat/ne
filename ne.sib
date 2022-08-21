@@ -20,6 +20,18 @@
 ] def freq_shift =
 
 [
+	w =
+	sec =
+	ef =
+	sf =
+
+	sf ef SAMPLING_FREQ sec * alin
+	2 f64 __PI * SAMPLING_FREQ / aconv acumsum
+	amap_sin
+] def freq_shift_sin =
+
+
+[
 	sec =
 	sec SAMPLING_FREQ * to_u64
 ] def sec2index =
@@ -36,10 +48,10 @@
 	base_array
 ] def merge_array =
 
-6 f64 total_sec =
+20 f64 total_sec =
 total_sec gen_base_array base_array =
 base_array
-200 f64 2200 f64 3 f64 <! c_sin freq_shift 
+200 f64 2200 f64 3 f64 <! c_sin freq_shift
 0 f64 merge_array
 
 
@@ -52,8 +64,6 @@ base_array
 3 f64
 merge_array
 ]
-
-
 'test.wav' swap write_to_wav2
 
 # [
