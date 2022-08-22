@@ -1,6 +1,7 @@
 'signal.sib' import
 'io.sib' import
 'math.sib' import
+'temperament.sib' import
 
 [
 	sec =
@@ -20,7 +21,6 @@
 ] def freq_shift =
 
 [
-	w =
 	sec =
 	ef =
 	sf =
@@ -48,23 +48,78 @@
 	base_array
 ] def merge_array =
 
+# [
+	f(t)
+	v(t)
+	p(t)
+	w
+]
+
 20 f64 total_sec =
 total_sec gen_base_array base_array =
 base_array
-200 f64 2200 f64 3 f64 <! c_sin freq_shift
+A4 C4 3 f64 freq_shift_sin
 0 f64 merge_array
 
-
-2200 f64 2200 f64 3 f64 <! c_sin freq_shift
+2200 f64 2200 f64 3 f64 freq_shift_sin
 3 f64 merge_array
- VOL_MAX 2 f64 / aconv 
-# [VOL_MAX 2 f64 / aconv
-2200 f64 2200 f64 3 f64 <! c_sin freq_shift 
 
-3 f64
-merge_array
-]
+2200 f64 200 f64 3 f64 freq_shift_sin
+6 f64 merge_array
+
+VOL_MAX 2 f64 / aconv 
 'test.wav' swap write_to_wav2
+
+
+[
+	list =
+	i =
+	array =
+
+	list left sf =
+	list right left sec =
+	list right right left ef =
+
+	ef [] == ? [array][
+		sec SAMPLING_FREQ * len =
+		array i len agetr
+		sf ef sec SAMPLING_FREQ * alin
+		aadd >!
+		array i len + list right right self
+	] exec
+] def make_line_sub =
+
+[
+	list =
+	list right left len =
+	len [] == ? [0 u64][
+		len
+		list right right self
+		+
+	] exec
+] def make_line_total_len =
+
+[
+	list =
+	0 f64
+	list make_line_total_len SAMPLING_FREQ *
+	afull array =
+	array 0 u64 list make_line_sub
+] def make_line = 
+
+[
+	400 f64 0.001 f64
+	500 f64 0.001 f64
+	400 f64 0.001 f64
+	400 f64 0.001 f64
+	500 f64 0.001 f64
+	400 f64 0.001 f64
+	500 f64 0 f64
+] make_line
+print_array
+__STACK
+
+
 
 # [
 
