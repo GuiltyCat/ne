@@ -117,7 +117,6 @@ VOL_MAX 2 f64 / aconv
 	500 f64 0 f64
 ] make_line
 print_array
-__STACK
 
 
 
