@@ -9,6 +9,7 @@
 ] def gen_base_array =
 
 
+
 [
 	w =
 	sec =
@@ -54,6 +55,7 @@
 	p(t)
 	w
 ]
+# [
 
 20 f64 total_sec =
 total_sec gen_base_array base_array =
@@ -69,8 +71,19 @@ A4 C4 3 f64 freq_shift_sin
 
 VOL_MAX 2 f64 / aconv 
 'test.wav' swap write_to_wav2
+]
 
 
+[
+	freq_array =
+	freq_array
+	2 f64 __PI * SAMPLING_FREQ / aconv acumsum
+	amap_sin
+] def make_sin_from_freq_array =
+
+
+0 u64 HOLD =
+1 u64 LINEAR =
 [
 	list =
 	i =
@@ -78,47 +91,80 @@ VOL_MAX 2 f64 / aconv
 
 	list left sf =
 	list right left sec =
-	list right right left ef =
+	list right right left mode =
+	list right right right left ef =
 
 	ef [] == ? [array][
 		sec SAMPLING_FREQ * len =
-		array i len agetr
-		sf ef sec SAMPLING_FREQ * alin
-		aadd >!
-		array i len + list right right self
+		array i len agetr sub_array =
+
+		mode HOLD == ? [
+			sub_array
+			sf len afull
+			aadd >!
+		][
+			mode LINEAR == ? [
+				sub_array
+				sf ef len alin
+				aadd >!
+				][] exec
+		] exec
+
+		array i len + list right right right self
 	] exec
-] def make_line_sub =
+] 
+def make_line_sub =
 
 [
 	list =
 	list right left len =
 	len [] == ? [0 u64][
-		len
-		list right right self
+		len 
+		list right right right self
 		+
 	] exec
 ] def make_line_total_len =
 
 [
 	list =
+	list right left len =
+	<! len [] == ? [][
+		<! len f64 >!
+		list right right right self
+	] exec
+] def make_line_to_number_sub =
+
+[
+	list =
+	list make_line_to_number_sub
+	list
+] def make_line_to_number =
+
+[
+	list =
+	list make_line_to_number 
 	0 f64
 	list make_line_total_len SAMPLING_FREQ *
 	afull array =
 	array 0 u64 list make_line_sub
 ] def make_line = 
 
+
 [
-	400 f64 0.001 f64
-	500 f64 0.001 f64
-	400 f64 0.001 f64
-	400 f64 0.001 f64
-	500 f64 0.001 f64
-	400 f64 0.001 f64
-	500 f64 0 f64
+	C4 0.5 HOLD C4 0.1 LINEAR
+	D4 0.5 HOLD D4 0.1 LINEAR
+	E4 0.5 HOLD E4 0.1 LINEAR
+	F4 0.5 HOLD F4 0.1 LINEAR
+	G4 0.5 HOLD G4 0.1 LINEAR
+	A4 0.5 HOLD A4 0.1 LINEAR
+	B4 0.5 HOLD B4 0.1 LINEAR
+	C5 0.5 HOLD C5 0.1 LINEAR
+	C5 0 HOLD
 ] make_line
-print_array
 
-
+make_sin_from_freq_array
+VOL_MAX 2 f64 / aconv 
+'test.wav' swap write_to_wav2
 
 # [
 
