@@ -188,6 +188,27 @@ make_sin_from_freq_array
 VOL_MAX 2 f64 / aconv 
 'test.wav' swap write_to_wav2
 
+
+
+
+[
+	R =
+	S =
+	D =
+	A =
+	array =
+] def envelope_generator_ADSR =
+
+[
+	R =
+	F =
+	S =
+	D =
+	H =
+	A =
+	array =
+] def envelope_generator_AHDSFR =
+
 # [
 
 [
