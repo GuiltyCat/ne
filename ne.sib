@@ -152,7 +152,7 @@ def make_line_sub =
 	list =
 	list BPS make_line_to_number_sub
 	list
-	__STACK
+# __STACK
 ] def make_line_to_number =
 
 [
@@ -163,7 +163,7 @@ def make_line_sub =
 	list
 	0 f64
 	list make_line_total_len SAMPLING_FREQ *
-	__STACK
+# __STACK
 	afull array =
 	array 0 u64 list make_line_sub
 ] def make_line = 
@@ -189,25 +189,6 @@ VOL_MAX 2 f64 / aconv
 'test.wav' swap write_to_wav2
 
 
-
-
-[
-	R =
-	S =
-	D =
-	A =
-	array =
-] def envelope_generator_ADSR =
-
-[
-	R =
-	F =
-	S =
-	D =
-	H =
-	A =
-	array =
-] def envelope_generator_AHDSFR =
 
 # [
 

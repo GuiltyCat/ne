@@ -1,0 +1,55 @@
+'signal.sib' import
+'io.sib' import
+'array.sib' import
+
+
+[
+	Delay =
+	array =
+	array alen Delay SAMPLING_FREQ * +
+] def envelope_len =
+
+# [ max vol is 1. A D R take sec, S takes between 0 to 1 ]
+[
+	R =
+	S =
+	D =
+	A =
+	len =
+
+
+
+	S len afull array =
+	A SAMPLING_FREQ * A_i =
+	D SAMPLING_FREQ * D_i =
+	R SAMPLING_FREQ * R_i =
+
+
+	R_i len > ? ['failed: R_i len >' eputs][
+		array 0 u64 A_i len min agetr 0 f64 aconv 0 f64 1 f64 A_i alin aadd >!
+
+		A_i D_i + len > ? [] [
+			array A_i D_i agetr 0 f64 aconv
+			1 f64 S D_i alin aadd >!
+		] exec
+		array len R_i - aget num =
+		array len R_i - R_i 1 u64 + agetr 0 f64 aconv 
+		num 0 f64 R_i alin aadd >!
+	] exec
+	array
+] def envelope_generator_ADSR =
+
+[
+	R =
+	F =
+	S =
+	D =
+	H =
+	A =
+	array =
+] def envelope_generator_AHDSFR =
+
+# [
+500 u64 0.001 f64 0.001 f64 0.5 f64 0.001 f64 envelope_generator_ADSR
+print_array
+]
