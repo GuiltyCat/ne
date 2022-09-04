@@ -141,8 +141,8 @@ def make_line_sub =
 	list right left len =
 	<! len [] == ? [][
 		list right
-		BPS
-		<! len f64 4 f64 / / setl
+		4 f64
+		<! len f64 / BPS / setl
 		list right right right BPS self
 	] exec
 ] def make_line_to_number_sub =
@@ -172,6 +172,7 @@ def make_line_sub =
 60 f64 BPM =
 
 # [Do not use 0 because inf occurs ]
+# [
 [
 	C4 4 HOLD C4 8 LINEAR
 	D4 4 HOLD D4 8 LINEAR
@@ -187,7 +188,7 @@ def make_line_sub =
 make_sin_from_freq_array
 VOL_MAX 2 f64 / aconv 
 'test.wav' swap write_to_wav2
-
+]
 
 
 # [
