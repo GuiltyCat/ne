@@ -1,13 +1,7 @@
 'signal.sib' import
 'io.sib' import
 'array.sib' import
-
-
-[
-	Delay =
-	array =
-	array alen Delay SAMPLING_FREQ * +
-] def envelope_len =
+'ne.sib' import
 
 # [ max vol is 1. A D R take sec, S takes between 0 to 1 ]
 [
@@ -17,13 +11,10 @@
 	A =
 	len =
 
-
-
 	S len afull array =
 	A SAMPLING_FREQ * A_i =
 	D SAMPLING_FREQ * D_i =
 	R SAMPLING_FREQ * R_i =
-
 
 	R_i len > ? ['failed: R_i len >' eputs][
 		array 0 u64 A_i len min agetr 0 f64 aconv 0 f64 1 f64 A_i alin aadd >!
@@ -48,6 +39,98 @@
 	A =
 	array =
 ] def envelope_generator_AHDSFR =
+
+
+
+[
+	ADSR =
+	gen_wave =
+	sec =
+	freq =
+
+	ADSR left A = 
+	ADSR right left D = 
+	ADSR right right left S = 
+	ADSR right right right left R = 
+
+	'freq = ' freq str >< eputs
+	'sec = ' sec str >< eputs
+
+	'A = ' A str >< eputs
+	'D = ' D str >< eputs
+	'S = ' S str >< eputs
+	'R = ' R str >< eputs
+
+	'call5' eputs
+	freq sec R + gen_wave array =
+	'alen = ' array alen str >< eputs
+	'call6' eputs
+	sec SAMPLING_FREQ * A D S R envelope_generator_ADSR array2 =
+	'call7' eputs
+	array array2 ahprod
+	'call8' eputs
+] def make_synthesize_array =
+
+
+[
+	sec = 
+	freq =
+
+	'call in make_sin' eputs
+
+	freq sec SAMPLING_FREQ * afull make_sin_from_freq_array
+] def make_sin =
+
+[
+	ADSR =
+
+	list =
+	i =
+	array =
+
+	list left sf =
+	list right left sec =
+	list right right left mode =
+	list right right right left ef =
+
+	ef [] == ? [array][
+		'call1' eputs
+		sf sec <! make_sin ADSR make_synthesize_array sub_array =
+		'call2' eputs
+		array i sub_array alen agetr sub_array aadd >!
+		'call3' eputs
+		sec SAMPLING_FREQ * next_len =
+		'call4' eputs
+		array i next_len + list right right right ADSR self
+	] exec
+
+] def make_synthesize_sin_sub =
+
+[
+	ADSR =
+	BPM  =
+	list =
+
+	ADSR right right right left R = 
+
+	BPM 60 f64 / BPS =
+	list BPS make_line_to_number list =
+
+	0 f64 list make_line_total_len R SAMPLING_FREQ *  + afull array =
+	'total alen = ' array alen str >< eputs
+
+	array 0 u64 list ADSR make_synthesize_sin_sub
+] def make_synthesize_sin =
+
+
+[
+	F#5 4 HOLD
+	E5  4 HOLD
+	D5  4 HOLD
+] 
+60 f64 [0.1 f64 0.1 f64 0.5 f64 0.3 f64]
+make_synthesize_sin
+print_array
 
 # [
 500 u64 0.001 f64 0.001 f64 0.5 f64 0.001 f64 envelope_generator_ADSR
