@@ -5,16 +5,21 @@
 
 # [ max vol is 1. A D R take sec, S takes between 0 to 1 ]
 [
-	R =
-	S =
-	D =
-	A =
-	len =
+	R = S = D = A = len =
 
 	S len afull array =
 	A SAMPLING_FREQ * A_i =
 	D SAMPLING_FREQ * D_i =
 	R SAMPLING_FREQ * R_i =
+# [
+
+	'len = ' len str >< eputs
+	'A_i = ' A_i str >< eputs
+	'D_i = ' D_i str >< eputs
+	'S = ' S str >< eputs
+	'R_i = ' R_i str >< eputs
+]
+
 
 	R_i len > ? ['failed: R_i len >' eputs][
 		array 0 u64 A_i len min agetr 0 f64 aconv 0 f64 1 f64 A_i alin aadd >!
@@ -24,34 +29,27 @@
 			1 f64 S D_i alin aadd >!
 		] exec
 		array len R_i - aget num =
-		array len R_i - R_i 1 u64 + agetr 0 f64 aconv 
+		array len R_i - R_i agetr 0 f64 aconv 
 		num 0 f64 R_i alin aadd >!
 	] exec
 	array
 ] def envelope_generator_ADSR =
 
 [
-	R =
-	F =
-	S =
-	D =
-	H =
-	A =
-	array =
+	R = F = S = D = H = A = array =
 ] def envelope_generator_AHDSFR =
 
 
 
 [
 	ADSR =
-	gen_wave =
+	freqsec2wave =
 	sec =
 	freq =
 
-	ADSR left A = 
-	ADSR right left D = 
-	ADSR right right left S = 
-	ADSR right right right left R = 
+	ADSR expand_list R = S = D = A =
+
+# [
 
 	'freq = ' freq str >< eputs
 	'sec = ' sec str >< eputs
@@ -60,23 +58,17 @@
 	'D = ' D str >< eputs
 	'S = ' S str >< eputs
 	'R = ' R str >< eputs
+]
 
-	'call5' eputs
-	freq sec R + gen_wave array =
-	'alen = ' array alen str >< eputs
-	'call6' eputs
-	sec SAMPLING_FREQ * A D S R envelope_generator_ADSR array2 =
-	'call7' eputs
+	freq sec R + freqsec2wave array =
+	array alen A D S R envelope_generator_ADSR array2 =
 	array array2 ahprod
-	'call8' eputs
 ] def make_synthesize_array =
 
 
 [
 	sec = 
 	freq =
-
-	'call in make_sin' eputs
 
 	freq sec SAMPLING_FREQ * afull make_sin_from_freq_array
 ] def make_sin =
@@ -94,13 +86,9 @@
 	list right right right left ef =
 
 	ef [] == ? [array][
-		'call1' eputs
 		sf sec <! make_sin ADSR make_synthesize_array sub_array =
-		'call2' eputs
 		array i sub_array alen agetr sub_array aadd >!
-		'call3' eputs
 		sec SAMPLING_FREQ * next_len =
-		'call4' eputs
 		array i next_len + list right right right ADSR self
 	] exec
 
@@ -116,23 +104,27 @@
 	BPM 60 f64 / BPS =
 	list BPS make_line_to_number list =
 
-	0 f64 list make_line_total_len R SAMPLING_FREQ *  + afull array =
-	'total alen = ' array alen str >< eputs
+	0 f64 list make_line_total_len R + SAMPLING_FREQ  * afull array =
 
 	array 0 u64 list ADSR make_synthesize_sin_sub
 ] def make_synthesize_sin =
+
+120 f64 BPM =
 
 
 [
 	F#5 4 HOLD
 	E5  4 HOLD
 	D5  4 HOLD
+	C5  4 HOLD
 ] 
-60 f64 [0.1 f64 0.1 f64 0.5 f64 0.3 f64]
-make_synthesize_sin
-print_array
+BPM 
+[0.1 f64 0.1 f64 0.5 f64 0.3 f64] make_synthesize_sin
+VOL_MAX 2 f64 / aconv 
+'test.wav' swap write_to_wav2
 
 # [
-500 u64 0.001 f64 0.001 f64 0.5 f64 0.001 f64 envelope_generator_ADSR
+print_array
+44100 u64 0.1 f64 0.1 f64 0.5 f64 0.3 f64 envelope_generator_ADSR
 print_array
 ]
