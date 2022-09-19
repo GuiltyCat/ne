@@ -5,7 +5,7 @@
 
 [
 	sec =
-	0 f64 SAMPLING_FREQ sec * afull
+	0;f64 SAMPLING_FREQ sec * afull
 ] def gen_base_array =
 
 
@@ -17,7 +17,7 @@
 	sf =
 
 	sf ef SAMPLING_FREQ sec * alin
-	2 f64 __PI * SAMPLING_FREQ / aconv acumsum
+	2;f64 __PI * SAMPLING_FREQ / aconv acumsum
 	<! w amap
 ] def freq_shift =
 
@@ -27,7 +27,7 @@
 	sf =
 
 	sf ef SAMPLING_FREQ sec * alin
-	2 f64 __PI * SAMPLING_FREQ / aconv acumsum
+	2;f64 __PI * SAMPLING_FREQ / aconv acumsum
 	amap_sin
 ] def freq_shift_sin =
 
@@ -77,13 +77,13 @@ VOL_MAX 2 f64 / aconv
 [
 	freq_array =
 	freq_array
-	2 f64 __PI * SAMPLING_FREQ / aconv acumsum
+	2;f64 __PI * SAMPLING_FREQ / aconv acumsum
 	amap_sin
 ] def make_sin_from_freq_array =
 
 
-0 u64 HOLD =
-1 u64 LINEAR =
+0;u64 HOLD =
+1;u64 LINEAR =
 [
 	list =
 	i =
@@ -128,7 +128,7 @@ def make_line_sub =
 [
 	list =
 	list right left len =
-	len [] == ? [0 u64][
+	len [] == ? [0;u64][
 		len 
 		list right right right self
 		+
@@ -141,8 +141,8 @@ def make_line_sub =
 	list right left len =
 	<! len [] == ? [][
 		list right
-		4 f64
-		<! len f64 / BPS / setl
+		4;f64
+		len / BPS / setl
 		list right right right BPS self
 	] exec
 ] def make_line_to_number_sub =
@@ -158,18 +158,18 @@ def make_line_sub =
 [
 	BPM =
 	list =
-	BPM 60 f64 / BPS =
+	BPM 60;f64 / BPS =
 	list BPS make_line_to_number list =
 	list
-	0 f64
+	0;f64
 	list make_line_total_len SAMPLING_FREQ *
 # __STACK
 	afull array =
-	array 0 u64 list make_line_sub
+	array 0;u64 list make_line_sub
 ] def make_line = 
 
 
-60 f64 BPM =
+60;f64 BPM =
 
 # [Do not use 0 because inf occurs ]
 # [
@@ -186,7 +186,7 @@ def make_line_sub =
 ] BPM make_line
 
 make_sin_from_freq_array
-VOL_MAX 2 f64 / aconv 
+VOL_MAX 2;f64 / aconv 
 'test.wav' swap write_to_wav2
 ]
 

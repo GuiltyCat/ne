@@ -22,15 +22,15 @@
 
 
 	R_i len > ? ['failed: R_i len >' eputs][
-		array 0 u64 A_i len min agetr 0 f64 aconv 0 f64 1 f64 A_i alin aadd >!
+		array 0;u64 A_i len min agetr 0;f64 aconv 0;f64 1;f64 A_i alin aadd >!
 
 		A_i D_i + len > ? [] [
-			array A_i D_i agetr 0 f64 aconv
-			1 f64 S D_i alin aadd >!
+			array A_i D_i agetr 0;f64 aconv
+			1;f64 S D_i alin aadd >!
 		] exec
 		array len R_i - aget num =
-		array len R_i - R_i agetr 0 f64 aconv 
-		num 0 f64 R_i alin aadd >!
+		array len R_i - R_i agetr 0;f64 aconv 
+		num 0;f64 R_i alin aadd >!
 	] exec
 	array
 ] def envelope_generator_ADSR =
@@ -101,16 +101,17 @@
 
 	ADSR right right right left R = 
 
-	BPM 60 f64 / BPS =
+	BPM 60;f64 / BPS =
+
 	list BPS make_line_to_number list =
 
-	0 f64 list make_line_total_len R + SAMPLING_FREQ  * afull array =
+	0;f64 list make_line_total_len R + SAMPLING_FREQ  * afull array =
 
-	array 0 u64 list ADSR make_synthesize_sin_sub
+	array 0;u64 list ADSR make_synthesize_sin_sub
 ] def make_synthesize_sin =
 
-120 f64 BPM =
-
+120;f64 BPM =
+# [
 
 [
 	F#5 4 HOLD
@@ -122,7 +123,61 @@ BPM
 [0.1 f64 0.1 f64 0.5 f64 0.3 f64] make_synthesize_sin
 VOL_MAX 2 f64 / aconv 
 'test.wav' swap write_to_wav2
+]
 
+
+[
+	times =
+	list =
+
+	list [] == ? [][
+		list
+		list left !> times * setl 
+		right right right times self
+	] exec
+] def shift_freq_sub =
+
+[
+	times =
+	list =
+	list times shift_freq_sub
+	list
+] def shift_freq =
+
+# [
+[
+
+	F#5 4. HOLD
+	E5  4. HOLD
+	D5  4. HOLD
+	C5  4. HOLD
+	B4  4. HOLD
+	C5  4. HOLD
+] list =
+list exec_list 
+__STACK >!
+list 0.5;f64 shift_freq
+__STACK
+[
+
+	F#5 4 HOLD
+	E5  4 HOLD
+	D5  4 HOLD
+	C5  4 HOLD
+	B4  4 HOLD
+	C5  4 HOLD
+] 0.5 f64 shift_freq
+__STACK
+]
+
+# [
+[ 
+	1 f64 2 3
+	3 f64 2 3
+	4 f64 2 3
+] 0.5 f64 shift_freq
+__STACK
+]
 # [
 print_array
 44100 u64 0.1 f64 0.1 f64 0.5 f64 0.3 f64 envelope_generator_ADSR

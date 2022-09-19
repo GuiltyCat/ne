@@ -17,17 +17,17 @@ def make_chunk =
 # [ support i16a ]
 [  
 	array =
-	array alen to_u32 4 u32 * data_size =
+	array alen to_u32 4;u32 * data_size =
 
 	!< [ Define constant ]
-	44100 u32 SAMPLING_FREQUENCY =
-	1 u16 NUMBER_OF_CHANNELS =
-	16 u16 BITS_PER_SAMPLE =
+	44100;u32 SAMPLING_FREQUENCY =
+	1;u16 NUMBER_OF_CHANNELS =
+	16;u16 BITS_PER_SAMPLE =
 
 	!< [ main chunk ]
 
 	'RIFF'
-	36 u32 data_size + n32_to_u8a
+	36;u32 data_size + n32_to_u8a
 	'WAVE'
 	><
 	><
@@ -36,17 +36,17 @@ def make_chunk =
 	!< [ sub-chunk1 ]
 
 	'fmt\ '
-	16 u32 n32_to_u8a !< [ size of chunk ]
+	16;u32 n32_to_u8a !< [ size of chunk ]
 	><
-	1 u16  n16_to_u8a  !< [ use PCM ]
+	1;u16  n16_to_u8a  !< [ use PCM ]
 	><
 	NUMBER_OF_CHANNELS n16_to_u8a     !< [ Number of channels ]
 	><
 	SAMPLING_FREQUENCY n32_to_u8a !< [ Sampling srequency ]
 	><
-	SAMPLING_FREQUENCY NUMBER_OF_CHANNELS * BITS_PER_SAMPLE 8 i16 / * to_u32 n32_to_u8a !< [ Bytes per sec ]
+	SAMPLING_FREQUENCY NUMBER_OF_CHANNELS * BITS_PER_SAMPLE 8;i16 / * to_u32 n32_to_u8a !< [ Bytes per sec ]
 	><
-	NUMBER_OF_CHANNELS BITS_PER_SAMPLE 8 u16 / * to_u16 n16_to_u8a !< [ Block align ]
+	NUMBER_OF_CHANNELS BITS_PER_SAMPLE 8;u16 / * to_u16 n16_to_u8a !< [ Block align ]
 	><
 	BITS_PER_SAMPLE n16_to_u8a
 	><
@@ -72,17 +72,17 @@ def make_wav =
 
 	file_path 'w' open file =
 
-	array alen to_u32 4 u32 * data_size =
+	array alen to_u32 4;u32 * data_size =
 
 	!< [ Define constant ]
-	44100 u32 SAMPLING_FREQUENCY =
-	1 u16 NUMBER_OF_CHANNELS =
-	16 u16 BITS_PER_SAMPLE =
+	44100;u32 SAMPLING_FREQUENCY =
+	1;u16 NUMBER_OF_CHANNELS =
+	16;u16 BITS_PER_SAMPLE =
 
 	!< [ main chunk ]
 
 	'RIFF'
-	36 u32 data_size + n32_to_u8a
+	36;u32 data_size + n32_to_u8a
 	'WAVE'
 	><
 	><
@@ -92,17 +92,17 @@ def make_wav =
 	!< [ sub-chunk1 ]
 
 	'fmt\ '
-	16 u32 n32_to_u8a !< [ size of chunk ]
+	16;u32 n32_to_u8a !< [ size of chunk ]
 	><
-	1 u16  n16_to_u8a  !< [ use PCM ]
+	1;u16  n16_to_u8a  !< [ use PCM ]
 	><
 	NUMBER_OF_CHANNELS n16_to_u8a     !< [ Number of channels ]
 	><
 	SAMPLING_FREQUENCY n32_to_u8a !< [ Sampling srequency ]
 	><
-	SAMPLING_FREQUENCY NUMBER_OF_CHANNELS * BITS_PER_SAMPLE 8 i16 / * to_u32 n32_to_u8a !< [ Bytes per sec ]
+	SAMPLING_FREQUENCY NUMBER_OF_CHANNELS * BITS_PER_SAMPLE 8;i16 / * to_u32 n32_to_u8a !< [ Bytes per sec ]
 	><
-	NUMBER_OF_CHANNELS BITS_PER_SAMPLE 8 u16 / * to_u16 n16_to_u8a !< [ Block align ]
+	NUMBER_OF_CHANNELS BITS_PER_SAMPLE 8;u16 / * to_u16 n16_to_u8a !< [ Block align ]
 	><
 	BITS_PER_SAMPLE n16_to_u8a
 	><
@@ -120,7 +120,7 @@ def make_wav =
 	file write
 
 
-	array 0 i16 ato atobytes
+	array 0;i16 ato atobytes
 # [
 	array to_i16a n16a_to_u8a
 ]
