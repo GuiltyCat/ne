@@ -49,6 +49,7 @@
 
 	ADSR expand_list R = S = D = A =
 
+
 # [
 
 	'freq = ' freq str >< eputs
@@ -80,6 +81,7 @@
 	i =
 	array =
 
+
 	list left sf =
 	list right left sec =
 	list right right left mode =
@@ -102,6 +104,7 @@
 	ADSR right right right left R = 
 
 	BPM 60;f64 / BPS =
+
 
 	list BPS make_line_to_number list =
 

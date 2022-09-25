@@ -143,7 +143,7 @@ def make_line_sub =
 		list right
 		4;f64
 		len / BPS / setl
-		list right right right BPS self
+		list right right right BPS self >!
 	] exec
 ] def make_line_to_number_sub =
 
