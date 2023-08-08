@@ -1,0 +1,279 @@
+'ne.sib' import
+'synthesize.sib' import
+
+100;f64 BPM =
+
+
+[
+
+	0 1 HOLD
+	0 2 HOLD
+
+	0 1 HOLD
+	0 2 HOLD
+
+	0 1 HOLD
+	0 2 HOLD
+
+	0 1 HOLD
+	0 2 HOLD
+
+	F#5 4 HOLD
+	E5  4 HOLD
+	D5  4 HOLD
+	C5  4 HOLD
+	B4  4 HOLD
+	C5  4 HOLD
+	B4  4 HOLD
+	A4  4 HOLD
+	G#4  1 HOLD
+
+	B4  4 HOLD
+	B4  4 HOLD
+	B4  4 HOLD
+	B4  8 HOLD
+	B4  8 HOLD
+	C#5 4 HOLD 
+	D5  4 HOLD 
+	C#5 4 HOLD 
+	C#5 4 HOLD 
+	C#5 8 HOLD 
+	D5  8 HOLD 
+	E5  1 HOLD
+
+	F#5 4 HOLD
+	E5  4 HOLD
+	D5  4 HOLD
+	C5  4 HOLD
+	B4  4 HOLD
+	C5  4 HOLD
+	B4  4 HOLD
+	A4  4 HOLD
+	G#4  1 HOLD
+
+	B4  4 HOLD
+	B4  4 HOLD
+	B4  4 HOLD
+	B4  8 HOLD
+	B4  8 HOLD
+	C#5 4 HOLD 
+	D5  4 HOLD 
+	C#5 4 HOLD 
+	C#5 4 HOLD 
+	C#5 8 HOLD 
+	D5  8 HOLD 
+	E5  1 HOLD
+
+	B4  8 HOLD
+	D5  2.66 HOLD 
+	B4  8 HOLD
+	A4  8 HOLD
+	F#5 1.33 HOLD
+
+	B4  8 HOLD
+	D5  2.66 HOLD 
+	B4  8 HOLD
+	A4  8 HOLD
+	F#5 1.33 HOLD
+
+	G4  4 HOLD
+	D5  4 HOLD 
+	B4  4 HOLD
+	D5  4 HOLD 
+	B4  4 HOLD
+	B4  4 HOLD
+	C#5 1.3 HOLD 
+
+	C4 10 HOLD
+
+] main =
+
+[
+
+	F#5 4 HOLD
+	E5  4 HOLD
+	D5  4 HOLD
+	C5  4 HOLD
+	B4  4 HOLD
+	C5  4 HOLD
+	E4 8 HOLD
+	F4 8 HOLD
+	F#4 8 HOLD
+	G4 8 HOLD
+	G#4 8 HOLD
+	A4 8 HOLD
+	A#4 8 HOLD
+	A4 8 HOLD
+	G#4 8 HOLD
+	G4 8 HOLD
+	F#4 8 HOLD
+	F4 8 HOLD
+
+	F#5 4 HOLD
+	E5  4 HOLD
+	D5  4 HOLD
+	C5  4 HOLD
+	B4  4 HOLD
+	C5  4 HOLD
+	E4 8 HOLD
+	F4 8 HOLD
+	F#4 8 HOLD
+	G4 8 HOLD
+	G#4 8 HOLD
+	A4 8 HOLD
+	A#4 8 HOLD
+	B4 8 HOLD
+	C5 8 HOLD
+	C#5 8 HOLD
+	D5 8 HOLD
+	D#5 8 HOLD
+
+	F#5 4 HOLD
+	E5  4 HOLD
+	D5  4 HOLD
+	C5  4 HOLD
+	B4  4 HOLD
+	C5  4 HOLD
+	E4 8 HOLD
+	F4 8 HOLD
+	F#4 8 HOLD
+	G4 8 HOLD
+	G#4 8 HOLD
+	A4 8 HOLD
+	A#4 8 HOLD
+	A4 8 HOLD
+	G#4 8 HOLD
+	G4 8 HOLD
+	F#4 8 HOLD
+	F4 8 HOLD
+
+	0 4 HOLD
+	B4 4 HOLD
+	B4 4 HOLD
+	0 4 HOLD
+	B4 4 HOLD
+	B4 4 HOLD
+	0 4 HOLD
+	C#5 4 HOLD
+	C#5 8 HOLD
+	D5 8 HOLD
+	E5 4 HOLD
+	D5 4 HOLD
+	C#5 4 HOLD
+
+	F#5 4 HOLD
+	E5  4 HOLD
+	D5  4 HOLD
+	C5  4 HOLD
+	B4  4 HOLD
+	C5  4 HOLD
+	E4 8 HOLD
+	F4 8 HOLD
+	F#4 8 HOLD
+	G4 8 HOLD
+	G#4 8 HOLD
+	A4 8 HOLD
+	A#4 8 HOLD
+	A4 8 HOLD
+	G#4 8 HOLD
+	G4 8 HOLD
+	F#4 8 HOLD
+	F4 8 HOLD
+
+	0 4 HOLD
+	B4 4 HOLD
+	B4 4 HOLD
+	0 4 HOLD
+	B4 4 HOLD
+	B4 4 HOLD
+	0 4 HOLD
+	C#5 4 HOLD
+	C#5 8 HOLD
+	D5 8 HOLD
+	E5 4 HOLD
+	D5 4 HOLD
+	C#5 4 HOLD
+
+
+	F#5 4 HOLD
+	E5  4 HOLD
+	D5  4 HOLD
+	C5  4 HOLD
+	B4  4 HOLD
+	C5  4 HOLD
+	B4  4 HOLD
+	A4  4 HOLD
+	G#4  1 HOLD
+
+	B4  4 HOLD
+	B4  4 HOLD
+	B4  4 HOLD
+	B4  8 HOLD
+	B4  8 HOLD
+	C#5 4 HOLD 
+	D5  4 HOLD 
+	C#5 4 HOLD 
+	C#5 4 HOLD 
+	C#5 8 HOLD 
+	D5  8 HOLD 
+	E5  1 HOLD
+
+	B4  8 HOLD
+	D5  2.66 HOLD 
+	B4  8 HOLD
+	A4  8 HOLD
+	F#5 1.33 HOLD
+
+	B4  8 HOLD
+	D5  2.66 HOLD 
+	B4  8 HOLD
+	A4  8 HOLD
+	F#5 1.33 HOLD
+
+	G4  4 HOLD
+	D5  4 HOLD 
+	B4  4 HOLD
+	D5  4 HOLD 
+	B4  4 HOLD
+	B4  4 HOLD
+	C#5 1.3 HOLD 
+
+	C4 10 HOLD
+] accomp =
+
+accomp copy
+BPM 
+[0.01;f64 0.001;f64 0.5;f64 0.1;f64] make_synthesize_sin 
+
+accomp copy
+BPM 
+[0.01;f64 0.001;f64 0.5;f64 0.1;f64] make_synthesize_sin 
+aadd
+
+# [
+accomp copy 0.5;f64 shift_freq
+BPM 
+[0.005;f64 0.001;f64 0.5;f64 0.1;f64] make_synthesize_sin
+
+accomp copy 0.25;f64 shift_freq
+BPM 
+[0.003;f64 0.001;f64 0.5;f64 0.1;f64] make_synthesize_sin 
+
+accomp copy 2;f64 shift_freq
+BPM 
+[0.001;f64 0.001;f64 0.5;f64 0.05;f64] make_synthesize_sin
+
+accomp copy 4;f64 shift_freq
+BPM 
+[0.001;f64 0.001;f64 0.5;f64 0.01;f64] make_synthesize_sin 
+]
+
+
+# aadd
+# aadd
+# aadd
+# aadd
+# accomp1
+
+VOL_MAX 3;f64 / aconv
+'kane_no_uta.wav' swap write_to_wav2

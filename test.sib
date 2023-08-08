@@ -1,0 +1,33 @@
+'ne.sib' import
+'synthesize.sib' import
+
+80;f64 BPM =
+
+
+[
+	F#5 100000 HOLD
+	E5  100000 HOLD
+] main =
+
+[
+	F#5 100000 HOLD
+	E5  100000 HOLD
+] accomp =
+
+accomp copy
+BPM 
+[0.01;f64 0.001;f64 0.5;f64 0.1;f64] make_synthesize_sin  accomp1 =
+
+accomp copy 0.5;f64 shift_freq
+BPM 
+[0.005;f64 0.001;f64 0.5;f64 0.1;f64] make_synthesize_sin  accomp2 =
+
+accomp1
+accomp2
+
+aadd
+
+
+
+VOL_MAX 5;f64 / aconv
+'kane_no_uta.wav' swap write_to_wav2
